@@ -1,0 +1,32 @@
+[12:53:41] [ServerMain/INFO]: Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
+[12:53:41] [ServerMain/INFO]: Found new data pack file/bukkit, loading it automatically
+[12:53:42] [ServerMain/INFO]: Loaded 7 recipes
+[12:53:42] [Server thread/INFO]: Starting minecraft server version 1.20.1
+[12:53:42] [Server thread/INFO]: Loading properties
+[12:53:42] [Server thread/INFO]: This server is running Paper version git-Paper-196 (MC: 1.20.1) (Implementing API version 1.20.1-R0.1-SNAPSHOT) (Git: 773dd72)
+[12:53:42] [Server thread/INFO]: Server Ping Player Sample Count: 12
+[12:53:42] [Server thread/INFO]: Using 4 threads for Netty based IO
+[12:53:43] [Server thread/WARN]: [!] The timings profiler has been enabled but has been scheduled for removal from Paper in the future.
+    We recommend installing the spark profiler as a replacement: https://spark.lucko.me/
+    For more information please visit: https://github.com/PaperMC/Paper/issues/8948
+[12:53:43] [Server thread/INFO]: [ChunkTaskScheduler] Chunk system is using 1 I/O threads, 5 worker threads, and gen parallelism of 5 threads
+[12:53:43] [Server thread/INFO]: Default game type: SURVIVAL
+[12:53:43] [Server thread/INFO]: Generating keypair
+[12:53:43] [Server thread/INFO]: Starting Minecraft server on *:25565
+[12:53:43] [Server thread/INFO]: Using default channel type
+[12:53:43] [Server thread/INFO]: Paper: Using Java compression from Velocity.
+[12:53:43] [Server thread/INFO]: Paper: Using Java cipher from Velocity.
+[12:53:43] [Server thread/INFO]: [TestPlugin] Loading server plugin TestPlugin v1.0
+[12:53:43] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
+[12:53:43] [Server thread/INFO]: Preparing level "world"
+[12:53:45] [Server thread/INFO]: Preparing start region for dimension minecraft:overworld
+[12:53:45] [Server thread/INFO]: Time elapsed: 43 ms
+[12:53:45] [Server thread/INFO]: Preparing start region for dimension minecraft:the_nether
+[12:53:45] [Server thread/INFO]: Time elapsed: 25 ms
+[12:53:45] [Server thread/INFO]: Preparing start region for dimension minecraft:the_end
+[12:53:45] [Server thread/INFO]: Time elapsed: 29 ms
+[12:53:45] [Server thread/INFO]: [TestPlugin] Enabling TestPlugin v1.0
+[12:53:45] [Server thread/INFO]: I am iiSkinny. This is my first plugin.
+[12:53:45] [Server thread/INFO]: Running delayed init tasks
+[12:53:45] [Server thread/INFO]: Done (3.150s)! For help, type "help"
+[12:53:45] [Server thread/INFO]: Timings Reset

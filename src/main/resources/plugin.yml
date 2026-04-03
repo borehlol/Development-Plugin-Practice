@@ -1,0 +1,8 @@
+name: TestPlugin
+version: 1.0
+main: gg.skinny.test.TestPlugin
+api-version: 1.20
+description: Super cool test plugin!
+author: iiSkinny
+contributors: [ii, Skinny]
+website: https://mcworkshop.org
