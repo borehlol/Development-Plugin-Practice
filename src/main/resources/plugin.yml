@@ -6,3 +6,7 @@ description: Super cool test plugin!
 author: iiSkinny
 contributors: [ii, Skinny]
 website: https://mcworkshop.org
+commands:
+  heal:
+    description: Fully heals the player using the command.
+    usage: /heal
