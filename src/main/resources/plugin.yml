@@ -10,3 +10,7 @@ commands:
   heal:
     description: Fully heals the player using the command.
     usage: /heal
+
+  creative:
+    description: Will set you in gamemode creative upon use
+    usage: /gmc
