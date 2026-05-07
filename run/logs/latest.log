@@ -1,32 +1,39 @@
-[12:53:41] [ServerMain/INFO]: Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
-[12:53:41] [ServerMain/INFO]: Found new data pack file/bukkit, loading it automatically
-[12:53:42] [ServerMain/INFO]: Loaded 7 recipes
-[12:53:42] [Server thread/INFO]: Starting minecraft server version 1.20.1
-[12:53:42] [Server thread/INFO]: Loading properties
-[12:53:42] [Server thread/INFO]: This server is running Paper version git-Paper-196 (MC: 1.20.1) (Implementing API version 1.20.1-R0.1-SNAPSHOT) (Git: 773dd72)
-[12:53:42] [Server thread/INFO]: Server Ping Player Sample Count: 12
-[12:53:42] [Server thread/INFO]: Using 4 threads for Netty based IO
-[12:53:43] [Server thread/WARN]: [!] The timings profiler has been enabled but has been scheduled for removal from Paper in the future.
+[02:34:32] [ServerMain/INFO]: Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
+[02:34:33] [ServerMain/INFO]: Loaded 7 recipes
+[02:34:34] [Server thread/INFO]: Starting minecraft server version 1.20.1
+[02:34:34] [Server thread/INFO]: Loading properties
+[02:34:34] [Server thread/INFO]: This server is running Paper version git-Paper-196 (MC: 1.20.1) (Implementing API version 1.20.1-R0.1-SNAPSHOT) (Git: 773dd72)
+[02:34:34] [Server thread/INFO]: Server Ping Player Sample Count: 12
+[02:34:34] [Server thread/INFO]: Using 4 threads for Netty based IO
+[02:34:34] [Server thread/WARN]: [!] The timings profiler has been enabled but has been scheduled for removal from Paper in the future.
     We recommend installing the spark profiler as a replacement: https://spark.lucko.me/
     For more information please visit: https://github.com/PaperMC/Paper/issues/8948
-[12:53:43] [Server thread/INFO]: [ChunkTaskScheduler] Chunk system is using 1 I/O threads, 5 worker threads, and gen parallelism of 5 threads
-[12:53:43] [Server thread/INFO]: Default game type: SURVIVAL
-[12:53:43] [Server thread/INFO]: Generating keypair
-[12:53:43] [Server thread/INFO]: Starting Minecraft server on *:25565
-[12:53:43] [Server thread/INFO]: Using default channel type
-[12:53:43] [Server thread/INFO]: Paper: Using Java compression from Velocity.
-[12:53:43] [Server thread/INFO]: Paper: Using Java cipher from Velocity.
-[12:53:43] [Server thread/INFO]: [TestPlugin] Loading server plugin TestPlugin v1.0
-[12:53:43] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
-[12:53:43] [Server thread/INFO]: Preparing level "world"
-[12:53:45] [Server thread/INFO]: Preparing start region for dimension minecraft:overworld
-[12:53:45] [Server thread/INFO]: Time elapsed: 43 ms
-[12:53:45] [Server thread/INFO]: Preparing start region for dimension minecraft:the_nether
-[12:53:45] [Server thread/INFO]: Time elapsed: 25 ms
-[12:53:45] [Server thread/INFO]: Preparing start region for dimension minecraft:the_end
-[12:53:45] [Server thread/INFO]: Time elapsed: 29 ms
-[12:53:45] [Server thread/INFO]: [TestPlugin] Enabling TestPlugin v1.0
-[12:53:45] [Server thread/INFO]: I am iiSkinny. This is my first plugin.
-[12:53:45] [Server thread/INFO]: Running delayed init tasks
-[12:53:45] [Server thread/INFO]: Done (3.150s)! For help, type "help"
-[12:53:45] [Server thread/INFO]: Timings Reset
+[02:34:34] [Server thread/INFO]: [ChunkTaskScheduler] Chunk system is using 1 I/O threads, 5 worker threads, and gen parallelism of 5 threads
+[02:34:34] [Server thread/INFO]: Default game type: SURVIVAL
+[02:34:34] [Server thread/INFO]: Generating keypair
+[02:34:34] [Server thread/INFO]: Starting Minecraft server on *:25565
+[02:34:34] [Server thread/INFO]: Using default channel type
+[02:34:34] [Server thread/INFO]: Paper: Using Java compression from Velocity.
+[02:34:34] [Server thread/INFO]: Paper: Using Java cipher from Velocity.
+[02:34:34] [Server thread/INFO]: [TestPlugin] Loading server plugin TestPlugin v1.0
+[02:34:34] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
+[02:34:34] [Server thread/INFO]: Preparing level "world"
+[02:34:35] [Server thread/INFO]: Preparing start region for dimension minecraft:overworld
+[02:34:35] [Server thread/INFO]: Time elapsed: 172 ms
+[02:34:35] [Server thread/INFO]: Preparing start region for dimension minecraft:the_nether
+[02:34:35] [Server thread/INFO]: Time elapsed: 13 ms
+[02:34:35] [Server thread/INFO]: Preparing start region for dimension minecraft:the_end
+[02:34:35] [Server thread/INFO]: Time elapsed: 10 ms
+[02:34:35] [Server thread/INFO]: [TestPlugin] Enabling TestPlugin v1.0
+[02:34:35] [Server thread/INFO]: Running delayed init tasks
+[02:34:35] [Server thread/INFO]: Done (1.266s)! For help, type "help"
+[02:34:35] [Server thread/INFO]: Timings Reset
+[02:34:39] [User Authenticator #0/INFO]: UUID of player iiSkinny is 35536b98-ef24-43cc-80af-6a01fe50cf5f
+[02:34:39] [Server thread/INFO]: iiSkinny joined the game
+[02:34:39] [Server thread/INFO]: iiSkinny[/127.0.0.1:55856] logged in with entity id 194 at ([world]4.5, 72.0, 9.5)
+[02:34:41] [Server thread/INFO]: iiSkinny issued server command: /heal
+[02:34:43] [Server thread/INFO]: iiSkinny issued server command: /gms
+[02:34:47] [Server thread/INFO]: iiSkinny issued server command: /gamemode survival
+[02:34:47] [Server thread/INFO]: [iiSkinny: Set own game mode to Survival Mode]
+[02:35:49] [Server thread/INFO]: iiSkinny lost connection: Disconnected
+[02:35:49] [Server thread/INFO]: iiSkinny left the game
