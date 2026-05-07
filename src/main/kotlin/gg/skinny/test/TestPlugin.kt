@@ -16,6 +16,7 @@ class TestPlugin : JavaPlugin(), Listener {
         getCommand("heal")?.setExecutor(HealCommand())
         getCommand("gmc")?.setExecutor(GmcCommand())
         getCommand("gms")?.setExecutor(GmsCommand())
+        getCommand("gmsp")?.setExecutor(GmspCommand())
     }
 
 
