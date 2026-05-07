@@ -18,7 +18,7 @@ class TestPlugin : JavaPlugin(), Listener {
         getCommand("gmc")?.setExecutor(GmcCommand())
         getCommand("gms")?.setExecutor(GmsCommand())
         getCommand("gmsp")?.setExecutor(GmspCommand())
-        getCommand("feed")!!.setExecutor(FeedCommand())
+        getCommand("feed")?.setExecutor(FeedCommand())
     }
 
 

@@ -28,7 +28,7 @@ class FeedCommand : CommandExecutor {
         }
 
         player.foodLevel = (amount + player.foodLevel).coerceIn(0, 20)
-//send and recieve a msg depending if u fed someone or if you got fed
+//send and recieve a msg depending on if u fed someone or if you got fed
         sender.sendPlainMessage("You have fed ${player.name}.")
         player.sendPlainMessage("${sender.name} has fed you.")
     return false
