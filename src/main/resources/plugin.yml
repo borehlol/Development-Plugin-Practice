@@ -11,11 +11,11 @@ commands:
     description: Fully heals the player using the command.
     usage: /heal
 
-  creative:
+  gmc:
     description: Will set you in gamemode creative upon use
     usage: /gmc
 
-  survival:
+  gms:
     description: Will set you in gamemode survival upon use
     usage: /gms
 
