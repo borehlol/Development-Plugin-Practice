@@ -14,3 +14,8 @@ commands:
   creative:
     description: Will set you in gamemode creative upon use
     usage: /gmc
+
+  survival:
+    description: Will set you in gamemode survival upon use
+    usage: /gms
+
