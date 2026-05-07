@@ -19,3 +19,7 @@ commands:
     description: Will set you in gamemode survival upon use
     usage: /gms
 
+  gmsp:
+    description: Will set you in gamemode spectator upon use
+    usage: /gmsp
+
