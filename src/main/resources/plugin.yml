@@ -22,4 +22,6 @@ commands:
   gmsp:
     description: Will set you in gamemode spectator upon use
     usage: /gmsp
-
+  feed:
+    description: Will restore you to full hunger
+    usage: /feed
