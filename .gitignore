@@ -40,4 +40,9 @@ bin/
 .vscode/
 
 ### Mac OS ###
-.DS_Storerun/
+.DS_Store
+
+### Run environment ###
+run/
+hs_err_pid*.log
+replay_pid*.log
