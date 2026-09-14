@@ -1,39 +1,68 @@
-[02:34:32] [ServerMain/INFO]: Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
-[02:34:33] [ServerMain/INFO]: Loaded 7 recipes
-[02:34:34] [Server thread/INFO]: Starting minecraft server version 1.20.1
-[02:34:34] [Server thread/INFO]: Loading properties
-[02:34:34] [Server thread/INFO]: This server is running Paper version git-Paper-196 (MC: 1.20.1) (Implementing API version 1.20.1-R0.1-SNAPSHOT) (Git: 773dd72)
-[02:34:34] [Server thread/INFO]: Server Ping Player Sample Count: 12
-[02:34:34] [Server thread/INFO]: Using 4 threads for Netty based IO
-[02:34:34] [Server thread/WARN]: [!] The timings profiler has been enabled but has been scheduled for removal from Paper in the future.
+[03:39:48] [ServerMain/INFO]: Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
+[03:39:50] [ServerMain/INFO]: Loaded 7 recipes
+[03:39:50] [Server thread/INFO]: Starting minecraft server version 1.20.1
+[03:39:50] [Server thread/INFO]: Loading properties
+[03:39:50] [Server thread/INFO]: This server is running Paper version git-Paper-196 (MC: 1.20.1) (Implementing API version 1.20.1-R0.1-SNAPSHOT) (Git: 773dd72)
+[03:39:51] [Server thread/INFO]: Using 4 threads for Netty based IO
+[03:39:51] [Server thread/INFO]: Server Ping Player Sample Count: 12
+[03:39:51] [Server thread/WARN]: [!] The timings profiler has been enabled but has been scheduled for removal from Paper in the future.
     We recommend installing the spark profiler as a replacement: https://spark.lucko.me/
     For more information please visit: https://github.com/PaperMC/Paper/issues/8948
-[02:34:34] [Server thread/INFO]: [ChunkTaskScheduler] Chunk system is using 1 I/O threads, 5 worker threads, and gen parallelism of 5 threads
-[02:34:34] [Server thread/INFO]: Default game type: SURVIVAL
-[02:34:34] [Server thread/INFO]: Generating keypair
-[02:34:34] [Server thread/INFO]: Starting Minecraft server on *:25565
-[02:34:34] [Server thread/INFO]: Using default channel type
-[02:34:34] [Server thread/INFO]: Paper: Using Java compression from Velocity.
-[02:34:34] [Server thread/INFO]: Paper: Using Java cipher from Velocity.
-[02:34:34] [Server thread/INFO]: [TestPlugin] Loading server plugin TestPlugin v1.0
-[02:34:34] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
-[02:34:34] [Server thread/INFO]: Preparing level "world"
-[02:34:35] [Server thread/INFO]: Preparing start region for dimension minecraft:overworld
-[02:34:35] [Server thread/INFO]: Time elapsed: 172 ms
-[02:34:35] [Server thread/INFO]: Preparing start region for dimension minecraft:the_nether
-[02:34:35] [Server thread/INFO]: Time elapsed: 13 ms
-[02:34:35] [Server thread/INFO]: Preparing start region for dimension minecraft:the_end
-[02:34:35] [Server thread/INFO]: Time elapsed: 10 ms
-[02:34:35] [Server thread/INFO]: [TestPlugin] Enabling TestPlugin v1.0
-[02:34:35] [Server thread/INFO]: Running delayed init tasks
-[02:34:35] [Server thread/INFO]: Done (1.266s)! For help, type "help"
-[02:34:35] [Server thread/INFO]: Timings Reset
-[02:34:39] [User Authenticator #0/INFO]: UUID of player iiSkinny is 35536b98-ef24-43cc-80af-6a01fe50cf5f
-[02:34:39] [Server thread/INFO]: iiSkinny joined the game
-[02:34:39] [Server thread/INFO]: iiSkinny[/127.0.0.1:55856] logged in with entity id 194 at ([world]4.5, 72.0, 9.5)
-[02:34:41] [Server thread/INFO]: iiSkinny issued server command: /heal
-[02:34:43] [Server thread/INFO]: iiSkinny issued server command: /gms
-[02:34:47] [Server thread/INFO]: iiSkinny issued server command: /gamemode survival
-[02:34:47] [Server thread/INFO]: [iiSkinny: Set own game mode to Survival Mode]
-[02:35:49] [Server thread/INFO]: iiSkinny lost connection: Disconnected
-[02:35:49] [Server thread/INFO]: iiSkinny left the game
+[03:39:51] [Server thread/INFO]: [ChunkTaskScheduler] Chunk system is using 1 I/O threads, 5 worker threads, and gen parallelism of 5 threads
+[03:39:51] [Server thread/INFO]: Default game type: SURVIVAL
+[03:39:51] [Server thread/INFO]: Generating keypair
+[03:39:51] [Server thread/INFO]: Starting Minecraft server on *:25565
+[03:39:51] [Server thread/INFO]: Using default channel type
+[03:39:51] [Server thread/INFO]: Paper: Using Java compression from Velocity.
+[03:39:51] [Server thread/INFO]: Paper: Using Java cipher from Velocity.
+[03:39:52] [Server thread/INFO]: [TestPlugin] Loading server plugin TestPlugin v1.0
+[03:39:52] [Server thread/INFO]: [WorldEdit] Loading server plugin WorldEdit v7.3.1+6763-2e55f4f
+[03:39:52] [Server thread/INFO]: Got request to register class com.sk89q.worldedit.bukkit.BukkitServerInterface with WorldEdit [com.sk89q.worldedit.extension.platform.PlatformManager@3b1f1759]
+[03:39:52] [Server thread/INFO]: [WorldEdit] Default configuration file written: config.yml
+[03:39:52] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
+[03:39:52] [Server thread/INFO]: [WorldEdit] Enabling WorldEdit v7.3.1+6763-2e55f4f
+[03:39:52] [Server thread/INFO]: Registering commands with com.sk89q.worldedit.bukkit.BukkitServerInterface
+[03:39:52] [Server thread/INFO]: WEPIF: Updated config file
+[03:39:52] [Server thread/INFO]: WEPIF: Using the Bukkit Permissions API.
+[03:39:52] [Server thread/INFO]: Using com.sk89q.worldedit.bukkit.adapter.impl.v1_20_R1.PaperweightAdapter as the Bukkit adapter
+[03:39:53] [Server thread/INFO]: Preparing level "world"
+[03:39:54] [Server thread/INFO]: Preparing start region for dimension minecraft:overworld
+[03:39:54] [Server thread/INFO]: Time elapsed: 209 ms
+[03:39:54] [Server thread/INFO]: Preparing start region for dimension minecraft:the_nether
+[03:39:54] [Server thread/INFO]: Time elapsed: 10 ms
+[03:39:54] [Server thread/INFO]: Preparing start region for dimension minecraft:the_end
+[03:39:54] [Server thread/INFO]: Time elapsed: 10 ms
+[03:39:54] [Server thread/INFO]: [TestPlugin] Enabling TestPlugin v1.0
+[03:39:54] [Server thread/INFO]: Running delayed init tasks
+[03:39:54] [Server thread/INFO]: Done (4.014s)! For help, type "help"
+[03:39:54] [Server thread/INFO]: Timings Reset
+[03:42:08] [User Authenticator #0/INFO]: UUID of player iiSkinny is 35536b98-ef24-43cc-80af-6a01fe50cf5f
+[03:42:09] [Server thread/INFO]: iiSkinny joined the game
+[03:42:09] [Server thread/INFO]: iiSkinny[/127.0.0.1:62213] logged in with entity id 192 at ([world]-7.464711210797217, 72.0, -2.0857546539881326)
+[03:42:12] [Server thread/INFO]: iiSkinny issued server command: //wand
+[03:42:14] [Server thread/INFO]: iiSkinny issued server command: //wand
+[03:42:16] [Server thread/INFO]: iiSkinny issued server command: /gmc
+[04:31:23] [Server thread/INFO]: iiSkinny issued server command: //set air
+[04:31:25] [Server thread/INFO]: iiSkinny issued server command: //undo
+[04:31:31] [Server thread/INFO]: iiSkinny issued server command: //schematic list
+[04:31:37] [Server thread/INFO]: iiSkinny issued server command: /schem load "mcpvp-club-spawn.mcworld"
+[04:32:57] [Server thread/INFO]: iiSkinny issued server command: /schem list
+[04:33:03] [Server thread/INFO]: iiSkinny issued server command: /schem load "schematic.schem"
+[04:33:04] [WorldEdit Task Executor - 1/INFO]: iiSkinny loaded C:\Users\jacob\OneDrive\Desktop\mc-kotlin-template\run\plugins\WorldEdit\schematics\schematic.schem
+[04:33:07] [Server thread/INFO]: iiSkinny issued server command: //paste
+[04:33:41] [Server thread/WARN]: Can't keep up! Is the server overloaded? Running 34119ms or 682 ticks behind
+[04:33:42] [Server thread/WARN]: iiSkinny moved too quickly! -8.16721345708433,31.119332532571164,-2.5868778254439437
+[04:33:56] [Server thread/INFO]: iiSkinny issued server command: //undo
+[04:34:21] [User Authenticator #1/INFO]: UUID of player iiSkinny is 35536b98-ef24-43cc-80af-6a01fe50cf5f
+[04:34:22] [Server thread/INFO]: iiSkinny lost connection: Disconnected
+[04:34:22] [Server thread/INFO]: iiSkinny left the game
+[04:34:22] [Server thread/INFO]: iiSkinny joined the game
+[04:34:22] [Server thread/INFO]: iiSkinny[/127.0.0.1:51583] logged in with entity id 5307 at ([world]-10.941176013210786, 108.85669076174324, -15.941468006465712)
+[04:34:27] [Server thread/WARN]: Can't keep up! Is the server overloaded? Running 15704ms or 314 ticks behind
+[04:34:40] [Server thread/INFO]: iiSkinny issued server command: //paste
+[04:35:13] [Server thread/WARN]: Can't keep up! Is the server overloaded? Running 16105ms or 322 ticks behind
+[04:35:22] [Server thread/INFO]: iiSkinny issued server command: /setworldspawn
+[04:35:22] [Server thread/INFO]: [iiSkinny: Set the world spawn point to -122, 158, -203 [0.0]]
+[04:35:25] [Server thread/INFO]: iiSkinny issued server command: /setworldspawn
+[04:35:25] [Server thread/INFO]: [iiSkinny: Set the world spawn point to -122, 158, -203 [0.0]]
+[04:35:26] [Server thread/INFO]: iiSkinny issued server command: /middl
