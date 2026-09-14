@@ -27,3 +27,6 @@ commands:
   spawn:
     description: Teleports you to the world's spawn point.
     usage: /spawn
+  speed:
+    description: Sets your speed (1-10), based on whether you're flying or on the ground.
+    usage: /speed <1-10>
