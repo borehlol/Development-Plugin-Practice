@@ -18,6 +18,7 @@ class TestPlugin : JavaPlugin(), Listener {
         getCommand("gms")?.setExecutor(GmsCommand())
         getCommand("gmsp")?.setExecutor(GmspCommand())
         getCommand("feed")?.setExecutor(FeedCommand())
+        getCommand("spawn")?.setExecutor(SpawnCommand())
     }
 
 

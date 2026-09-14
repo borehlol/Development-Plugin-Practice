@@ -24,3 +24,6 @@ commands:
   feed:
     description: Will restore you to full hunger
     usage: /feed
+  spawn:
+    description: Teleports you to the world's spawn point.
+    usage: /spawn
