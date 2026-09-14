@@ -44,6 +44,7 @@ tasks {
 
     runServer {
         minecraftVersion("1.20.1")
+        jvmArgs("-Dterminal.jline=false", "-Dterminal.ansi=false")
     }
 }
 
