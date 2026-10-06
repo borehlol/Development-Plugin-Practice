@@ -20,7 +20,11 @@ class TestPlugin : JavaPlugin(), Listener {
         getCommand("gms")?.setExecutor(GmsCommand())
         getCommand("gmsp")?.setExecutor(GmspCommand())
         getCommand("feed")?.setExecutor(FeedCommand())
-        getCommand("spawn")?.setExecutor(SpawnCommand())
+        val spawnCommand = SpawnCommand(this)
+        server.pluginManager.registerEvents(spawnCommand, this)
+        getCommand("spawn")?.setExecutor(spawnCommand)
+        getCommand("setspawn")?.setExecutor(SetSpawnCommand(this))
+        getCommand("middle")?.setExecutor(MiddleCommand())
         getCommand("speed")?.setExecutor(SpeedCommand())
 
         val buildCommand = BuildCommand()

@@ -47,7 +47,17 @@ commands:
   rtp:
     description: Opens a menu to teleport to a random spot in the overworld, nether, or end.
     usage: /rtp
+  setspawn:
+    description: Sets the /spawn location to where you are standing and the direction you are facing.
+    usage: /setspawn
+    permission: skinny.setspawn
+  middle:
+    description: Moves you to the middle of the block you are standing on.
+    usage: /middle
 permissions:
+  skinny.setspawn:
+    description: Allows setting the spawn location with /setspawn.
+    default: op
   skinny.build:
     description: Allows using /build to break and place blocks.
     default: op
