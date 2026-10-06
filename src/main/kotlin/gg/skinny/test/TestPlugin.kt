@@ -11,6 +11,8 @@ import org.bukkit.plugin.java.JavaPlugin
 
 class TestPlugin : JavaPlugin(), Listener {
 
+    private lateinit var economy: EconomyManager
+
     override fun onEnable() {
         server.pluginManager.registerEvents(this, this)
         getCommand("heal")?.setExecutor(HealCommand())
@@ -20,6 +22,20 @@ class TestPlugin : JavaPlugin(), Listener {
         getCommand("feed")?.setExecutor(FeedCommand())
         getCommand("spawn")?.setExecutor(SpawnCommand())
         getCommand("speed")?.setExecutor(SpeedCommand())
+
+        economy = EconomyManager(this)
+        economy.load()
+        server.pluginManager.registerEvents(economy, this)
+        getCommand("baltop")?.setExecutor(BaltopCommand(economy))
+        getCommand("eco")?.setExecutor(EcoCommand(economy))
+
+        val scoreboardManager = ScoreboardManager(this, economy)
+        server.pluginManager.registerEvents(scoreboardManager, this)
+        scoreboardManager.start()
+    }
+
+    override fun onDisable() {
+        if (::economy.isInitialized) economy.save()
     }
 
 

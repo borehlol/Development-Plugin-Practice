@@ -30,3 +30,14 @@ commands:
   speed:
     description: Sets your speed (1-10), based on whether you're flying or on the ground.
     usage: /speed <1-10>
+  baltop:
+    description: Shows the players with the most money or shards.
+    usage: /baltop [money|shards] [page]
+  eco:
+    description: Gives, takes, or sets a player's money or shards.
+    usage: /eco <give|take|set> <player> <money|shards> <amount>
+    permission: skinny.eco
+permissions:
+  skinny.eco:
+    description: Allows changing player balances with /eco.
+    default: op
