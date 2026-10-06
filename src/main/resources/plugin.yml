@@ -40,7 +40,14 @@ commands:
   pay:
     description: Sends money to another player.
     usage: /pay <player> <amount>
+  build:
+    description: Toggles build mode, which allows breaking and placing blocks.
+    usage: /build
+    permission: skinny.build
 permissions:
+  skinny.build:
+    description: Allows using /build to break and place blocks.
+    default: op
   skinny.eco:
     description: Allows changing player balances with /economy add, take, and set.
     default: op

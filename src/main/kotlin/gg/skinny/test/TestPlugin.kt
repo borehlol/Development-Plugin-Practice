@@ -23,6 +23,10 @@ class TestPlugin : JavaPlugin(), Listener {
         getCommand("spawn")?.setExecutor(SpawnCommand())
         getCommand("speed")?.setExecutor(SpeedCommand())
 
+        val buildCommand = BuildCommand()
+        server.pluginManager.registerEvents(buildCommand, this)
+        getCommand("build")?.setExecutor(buildCommand)
+
         economy = EconomyManager(this)
         economy.load()
         server.pluginManager.registerEvents(economy, this)
