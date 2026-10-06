@@ -84,6 +84,26 @@ class EconomyManager(private val plugin: JavaPlugin) : Listener {
             .sortedByDescending { balance(it.first, currency) }
 
     companion object {
+        // Accepts plain numbers or shorthand like 1.5k, 2m, 1b.
+        fun parseAmount(input: String): Double? {
+            if (input.isEmpty()) return null
+            val multiplier = when (input.last().lowercaseChar()) {
+                'k' -> 1_000.0
+                'm' -> 1_000_000.0
+                'b' -> 1_000_000_000.0
+                else -> 1.0
+            }
+            val number = if (multiplier == 1.0) input else input.dropLast(1)
+            val amount = number.toDoubleOrNull()?.times(multiplier) ?: return null
+            return if (amount.isFinite() && amount >= 0) amount else null
+        }
+
+        fun parseCurrency(input: String): Currency? = when (input.lowercase()) {
+            "money" -> Currency.MONEY
+            "shards" -> Currency.SHARDS
+            else -> null
+        }
+
         fun format(value: Double): String = when {
             value >= 1_000_000_000 -> "%.1fB".format(value / 1_000_000_000)
             value >= 1_000_000 -> "%.1fM".format(value / 1_000_000)

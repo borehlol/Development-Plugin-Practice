@@ -33,11 +33,14 @@ commands:
   baltop:
     description: Shows the players with the most money or shards.
     usage: /baltop [money|shards] [page]
-  eco:
-    description: Gives, takes, or sets a player's money or shards.
-    usage: /eco <give|take|set> <player> <money|shards> <amount>
-    permission: skinny.eco
+  economy:
+    description: Shows economy help, or lets admins add, take, or set balances.
+    usage: /economy <help|add|take|set> [player] [money|shards] [amount]
+    aliases: [eco]
+  pay:
+    description: Sends money to another player.
+    usage: /pay <player> <amount>
 permissions:
   skinny.eco:
-    description: Allows changing player balances with /eco.
+    description: Allows changing player balances with /economy add, take, and set.
     default: op

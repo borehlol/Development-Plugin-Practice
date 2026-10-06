@@ -27,7 +27,8 @@ class TestPlugin : JavaPlugin(), Listener {
         economy.load()
         server.pluginManager.registerEvents(economy, this)
         getCommand("baltop")?.setExecutor(BaltopCommand(economy))
-        getCommand("eco")?.setExecutor(EcoCommand(economy))
+        getCommand("economy")?.setExecutor(EconomyCommand(economy))
+        getCommand("pay")?.setExecutor(PayCommand(economy))
 
         val scoreboardManager = ScoreboardManager(this, economy)
         server.pluginManager.registerEvents(scoreboardManager, this)
