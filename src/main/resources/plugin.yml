@@ -44,6 +44,9 @@ commands:
     description: Toggles build mode, which allows breaking and placing blocks.
     usage: /build
     permission: skinny.build
+  rtp:
+    description: Opens a menu to teleport to a random spot in the overworld, nether, or end.
+    usage: /rtp
 permissions:
   skinny.build:
     description: Allows using /build to break and place blocks.

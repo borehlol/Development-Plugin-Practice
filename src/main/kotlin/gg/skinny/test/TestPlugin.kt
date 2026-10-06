@@ -27,6 +27,10 @@ class TestPlugin : JavaPlugin(), Listener {
         server.pluginManager.registerEvents(buildCommand, this)
         getCommand("build")?.setExecutor(buildCommand)
 
+        val rtpCommand = RtpCommand(this)
+        server.pluginManager.registerEvents(rtpCommand, this)
+        getCommand("rtp")?.setExecutor(rtpCommand)
+
         economy = EconomyManager(this)
         economy.load()
         server.pluginManager.registerEvents(economy, this)
