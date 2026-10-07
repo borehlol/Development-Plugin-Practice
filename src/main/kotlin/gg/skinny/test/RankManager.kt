@@ -49,12 +49,12 @@ enum class Rank(
         Perk("skinny.setspawn", "/setspawn"),
         Perk("skinny.eco", "/economy add, take, set"),
     )),
-    SR_MOD("Sr. Mod", "SR.MOD", NamedTextColor.DARK_PURPLE, Material.DIAMOND_SWORD, listOf(
+    SR_MOD("Sr. Mod", "SR.MOD", NamedTextColor.GREEN, Material.DIAMOND_SWORD, listOf(
         Perk("minecraft.command.ban-ip", "/ban-ip"),
         Perk("minecraft.command.pardon-ip", "/pardon-ip"),
         Perk("skinny.speed", "/speed"),
     )),
-    MOD("Mod", "MOD", NamedTextColor.LIGHT_PURPLE, Material.IRON_SWORD, listOf(
+    MOD("Mod", "MOD", NamedTextColor.DARK_GREEN, Material.IRON_SWORD, listOf(
         Perk("minecraft.command.teleport", "/tp"),
         Perk("minecraft.command.ban", "/ban"),
         Perk("minecraft.command.pardon", "/pardon"),
@@ -65,7 +65,7 @@ enum class Rank(
     HELPER("Helper", "HELPER", NamedTextColor.YELLOW, Material.BOOK, listOf(
         Perk("minecraft.command.kick", "/kick"),
     )),
-    MEDIA("Media", "MEDIA", NamedTextColor.GOLD, Material.SPYGLASS, listOf(
+    MEDIA("Media", "MEDIA", NamedTextColor.LIGHT_PURPLE, Material.SPYGLASS, listOf(
         Perk("skinny.heal", "/heal"),
     )),
     SKINNY_PLUS("Skinny+", "SKINNY+", TextColor.color(0x3FA9F5), Material.DIAMOND, listOf(
