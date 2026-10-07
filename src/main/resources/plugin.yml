@@ -10,26 +10,32 @@ commands:
   heal:
     description: Fully heals the player using the command.
     usage: /heal
+    permission: skinny.heal
   gmc:
     description: Will set you in gamemode creative upon use
     usage: /gmc
+    permission: skinny.gamemode.creative
 
   gms:
     description: Will set you in gamemode survival upon use
     usage: /gms
+    permission: skinny.gamemode.survival
 
   gmsp:
     description: Will set you in gamemode spectator upon use
     usage: /gmsp
+    permission: skinny.gamemode.spectator
   feed:
     description: Will restore you to full hunger
     usage: /feed
+    permission: skinny.feed
   spawn:
     description: Teleports you to the world's spawn point.
     usage: /spawn
   speed:
     description: Sets your speed (1-10), based on whether you're flying or on the ground.
     usage: /speed <1-10>
+    permission: skinny.speed
   baltop:
     description: Shows the players with the most money or shards.
     usage: /baltop [money|shards] [page]
@@ -54,6 +60,10 @@ commands:
   middle:
     description: Moves you to the middle of the block you are standing on.
     usage: /middle
+  grants:
+    description: Opens a menu to change a player's rank, or sets it directly.
+    usage: /grants <player> [rank]
+    permission: skinny.grants
 permissions:
   skinny.setspawn:
     description: Allows setting the spawn location with /setspawn.
@@ -63,4 +73,25 @@ permissions:
     default: op
   skinny.eco:
     description: Allows changing player balances with /economy add, take, and set.
+    default: op
+  skinny.grants:
+    description: Allows changing player ranks with /grants.
+    default: op
+  skinny.heal:
+    description: Allows using /heal.
+    default: op
+  skinny.feed:
+    description: Allows using /feed.
+    default: op
+  skinny.speed:
+    description: Allows using /speed.
+    default: op
+  skinny.gamemode.creative:
+    description: Allows using /gmc.
+    default: op
+  skinny.gamemode.survival:
+    description: Allows using /gms.
+    default: op
+  skinny.gamemode.spectator:
+    description: Allows using /gmsp.
     default: op

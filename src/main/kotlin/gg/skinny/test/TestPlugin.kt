@@ -45,6 +45,16 @@ class TestPlugin : JavaPlugin(), Listener {
         val scoreboardManager = ScoreboardManager(this, economy)
         server.pluginManager.registerEvents(scoreboardManager, this)
         scoreboardManager.start()
+
+        val ranks = RankManager(this)
+        ranks.load()
+        server.pluginManager.registerEvents(ranks, this)
+        ranks.refreshTeams()
+        ranks.applyAllPermissions()
+
+        val grantsCommand = GrantsCommand(this, ranks, economy)
+        server.pluginManager.registerEvents(grantsCommand, this)
+        getCommand("grants")?.setExecutor(grantsCommand)
     }
 
     override fun onDisable() {
