@@ -9,6 +9,10 @@
 # Players connect to localhost:25565 (the proxy). The Paper servers have no public port,
 # so nobody can bypass the proxy and its login checks.
 
+# Fixes the volume names to network_<name> no matter what this folder is called,
+# which scripts/backup.ps1 and restore.ps1 rely on.
+name: network
+
 x-paper-env: &paper-env
   EULA: "TRUE"
   TYPE: PAPER

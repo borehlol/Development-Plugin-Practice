@@ -50,3 +50,6 @@ replay_pid*.log
 ### Network ###
 network/.env
 network/plugins/*.jar
+
+### Backups (contain passwords) ###
+backups/
