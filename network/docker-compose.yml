@@ -1,0 +1,142 @@
+# SkinnySMP network: a Velocity proxy in front of four Paper servers, plus MySQL for shared data.
+#
+#   docker compose up -d              start everything
+#   docker compose restart lifesteal  restart one server (e.g. after ./gradlew deployNetwork)
+#   docker compose logs -f lifesteal  watch a server's console
+#   docker compose exec lifesteal rcon-cli    type console commands
+#   docker compose down               stop everything (worlds are kept)
+#
+# Players connect to localhost:25565 (the proxy). The Paper servers have no public port,
+# so nobody can bypass the proxy and its login checks.
+
+x-paper-env: &paper-env
+  EULA: "TRUE"
+  TYPE: PAPER
+  VERSION: "1.20.1"
+  # The proxy handles Mojang login and forwards each player's identity to the servers.
+  ONLINE_MODE: "FALSE"
+  # Fills ${CFG_VELOCITY_SECRET} in config/paper-global.yml.
+  REPLACE_ENV_VARIABLES: "TRUE"
+  CFG_VELOCITY_SECRET: ${VELOCITY_SECRET}
+  USE_AIKAR_FLAGS: "TRUE"
+  # Read by the plugin; each server also sets SKINNY_SERVER to say which one it is.
+  SKINNY_IP: play.skinnymc.net
+  # Shared ranks live in the mysql service below.
+  SKINNY_DB_HOST: mysql
+  SKINNY_DB_NAME: skinny
+  SKINNY_DB_USER: skinny
+  SKINNY_DB_PASSWORD: ${MYSQL_PASSWORD}
+  TZ: America/Los_Angeles
+
+x-paper: &paper
+  image: itzg/minecraft-server:java21
+  restart: unless-stopped
+  tty: true
+  stdin_open: true
+  depends_on:
+    mysql:
+      condition: service_healthy
+
+services:
+  proxy:
+    image: itzg/mc-proxy
+    restart: unless-stopped
+    ports:
+      - "25565:25577"
+    environment:
+      TYPE: VELOCITY
+      MEMORY: 512m
+      VELOCITY_FORWARDING_SECRET: ${VELOCITY_SECRET}
+    # On first boot the image writes a RANDOM forwarding.secret into proxy-data. If logins fail
+    # with "Unable to verify player details", overwrite it with the .env value and restart:
+    #   docker compose exec proxy sh -c 'printf %s "$VELOCITY_FORWARDING_SECRET" > /server/forwarding.secret'
+    volumes:
+      - ./velocity:/config:ro
+      - proxy-data:/server
+    depends_on:
+      - lobby
+
+  lobby:
+    <<: *paper
+    environment:
+      <<: *paper-env
+      SKINNY_SERVER: lobby
+      MEMORY: 1G
+      MOTD: SkinnySMP Lobby
+      LEVEL_TYPE: FLAT
+      ALLOW_NETHER: "FALSE"
+      MODRINTH_PROJECTS: worldedit,worldguard
+    volumes:
+      - ./plugins:/plugins:ro
+      - ./config:/config:ro
+      - lobby-data:/data
+
+  lifesteal:
+    <<: *paper
+    environment:
+      <<: *paper-env
+      SKINNY_SERVER: lifesteal
+      MEMORY: 2G
+      MOTD: SkinnySMP Lifesteal
+      MODRINTH_PROJECTS: worldedit,worldguard,chunky
+    volumes:
+      - ./plugins:/plugins:ro
+      - ./config:/config:ro
+      - lifesteal-data:/data
+
+  kitpvp:
+    <<: *paper
+    environment:
+      <<: *paper-env
+      SKINNY_SERVER: kitpvp
+      MEMORY: 1536M
+      MOTD: SkinnySMP KitPvP
+      LEVEL_TYPE: FLAT
+      ALLOW_NETHER: "FALSE"
+      MODRINTH_PROJECTS: worldedit,worldguard
+    volumes:
+      - ./plugins:/plugins:ro
+      - ./config:/config:ro
+      - kitpvp-data:/data
+
+  minigame:
+    <<: *paper
+    environment:
+      <<: *paper-env
+      SKINNY_SERVER: minigame
+      MEMORY: 1G
+      MOTD: SkinnySMP Minigame
+      LEVEL_TYPE: FLAT
+      ALLOW_NETHER: "FALSE"
+      MODRINTH_PROJECTS: worldedit,worldguard
+    volumes:
+      - ./plugins:/plugins:ro
+      - ./config:/config:ro
+      - minigame-data:/data
+
+  # Network-wide data such as ranks. Only reachable from the other containers.
+  mysql:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: skinny
+      MYSQL_USER: skinny
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+# Worlds and server files live in Docker volumes rather than this OneDrive folder,
+# so OneDrive never syncs a world while a server is writing to it.
+volumes:
+  proxy-data:
+  lobby-data:
+  lifesteal-data:
+  kitpvp-data:
+  minigame-data:
+  mysql-data:

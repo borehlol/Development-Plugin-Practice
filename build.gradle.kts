@@ -42,6 +42,14 @@ tasks {
         filteringCharset = Charsets.UTF_8.name()
     }
 
+    // Builds the plugin and puts it where the network's servers load plugins from.
+    // Restart a server afterwards (docker compose restart <name>) to load the new build.
+    register<Copy>("deployNetwork") {
+        from(reobfJar.flatMap { it.outputJar })
+        into(layout.projectDirectory.dir("network/plugins"))
+        rename { "SkinnyPlugin.jar" }
+    }
+
     runServer {
         minecraftVersion("1.20.1")
         jvmArgs("-Dterminal.jline=false", "-Dterminal.ansi=false")

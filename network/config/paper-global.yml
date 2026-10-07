@@ -1,0 +1,6 @@
+# Copied into every Paper server's config folder on startup. Paper fills in every other setting.
+proxies:
+  velocity:
+    enabled: true
+    online-mode: true
+    secret: '${CFG_VELOCITY_SECRET}'

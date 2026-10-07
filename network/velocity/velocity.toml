@@ -1,0 +1,24 @@
+# Velocity proxy config. Settings not listed here use Velocity's defaults.
+config-version = "2.7"
+
+bind = "0.0.0.0:25577"
+motd = "<bold><#3FA9F5>Skinny</#3FA9F5><white>SMP</white></bold> <gray>| NA West</gray>\n<gray>Lifesteal • KitPvP • Minigames</gray>"
+show-max-players = 100
+online-mode = true
+force-key-authentication = true
+
+# "modern" sends each player's real UUID and skin to the servers, signed with VELOCITY_SECRET.
+player-info-forwarding-mode = "modern"
+forwarding-secret-file = "forwarding.secret"
+
+# Names here are what /server <name> uses. Hostnames are the service names in docker-compose.yml.
+[servers]
+lobby = "lobby:25565"
+lifesteal = "lifesteal:25565"
+kitpvp = "kitpvp:25565"
+minigame = "minigame:25565"
+
+# Everyone joins the lobby first.
+try = ["lobby"]
+
+[forced-hosts]

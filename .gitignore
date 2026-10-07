@@ -46,3 +46,7 @@ bin/
 run/
 hs_err_pid*.log
 replay_pid*.log
+
+### Network ###
+network/.env
+network/plugins/*.jar

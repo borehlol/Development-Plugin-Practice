@@ -6,19 +6,22 @@ import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextColor
 import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.Material
-import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.permissions.PermissionAttachment
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scoreboard.Scoreboard
-import java.io.File
 import java.util.UUID
+import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
+import java.util.logging.Level
 
 // A permission a rank unlocks, and the command it unlocks for the /grants menu.
 class Perk(val permission: String, val label: String)
@@ -92,39 +95,103 @@ enum class Rank(
     fun format(name: String): Component = prefix().append(Component.text(name, color))
 }
 
-// Stores each player's rank in plugins/TestPlugin/ranks.yml, shows it in chat, the tab list, and above heads,
-// and gives online players their rank's permissions.
-class RankManager(private val plugin: JavaPlugin) : Listener {
+// Keeps each player's rank in a RankStore (MySQL on the network), shows it in chat, the tab list,
+// and above heads, and gives online players their rank's permissions.
+class RankManager(private val plugin: JavaPlugin, private val store: RankStore) : Listener {
 
-    private val file = File(plugin.dataFolder, "ranks.yml")
-
+    // A copy of the store, so ranks can be read without waiting on the database.
     // Chat is rendered off the main thread, so this map is read concurrently.
-    private val ranks = ConcurrentHashMap<UUID, Rank>()
+    private val entries = ConcurrentHashMap<UUID, RankEntry>()
+
+    // Every store call runs here, one at a time and in order, so the main thread never waits on the database.
+    private val database = Executors.newSingleThreadExecutor()
+
+    // Players whose rank this server changed but hasn't finished saving. Only used on the main thread.
+    private val pendingWrites = mutableMapOf<UUID, Int>()
 
     private val attachments = mutableMapOf<UUID, PermissionAttachment>()
 
+    // Blocks, so only call it while the plugin is enabling.
     fun load() {
-        val yaml = YamlConfiguration.loadConfiguration(file)
-        for (key in yaml.getKeys(false)) {
-            val rank = yaml.getString(key)?.let { name -> Rank.values().firstOrNull { it.name == name } } ?: continue
-            ranks[UUID.fromString(key)] = rank
+        entries.putAll(store.loadAll())
+    }
+
+    // Every 10 seconds, picks up ranks granted on other servers.
+    fun startSync() {
+        plugin.server.scheduler.runTaskTimer(plugin, Runnable {
+            database.execute {
+                val loaded = try {
+                    store.loadAll()
+                } catch (e: Exception) {
+                    plugin.logger.log(Level.WARNING, "Couldn't load ranks", e)
+                    return@execute
+                }
+                runOnMainThread { applyLoaded(loaded) }
+            }
+        }, 200L, 200L)
+    }
+
+    // Waits for ranks still being saved, so a grant just before a restart isn't lost.
+    fun close() {
+        database.shutdown()
+        if (!database.awaitTermination(10, TimeUnit.SECONDS)) {
+            plugin.logger.severe("Gave up waiting for ranks to save")
         }
     }
 
-    private fun save() {
-        val yaml = YamlConfiguration()
-        for ((uuid, rank) in ranks) yaml.set(uuid.toString(), rank.name)
-        plugin.dataFolder.mkdirs()
-        yaml.save(file)
+    private fun applyLoaded(loaded: Map<UUID, RankEntry>) {
+        var changed = false
+        for ((uuid, entry) in loaded) {
+            // This server's own newer change hasn't reached the database yet.
+            if (uuid in pendingWrites) continue
+            val old = entries.put(uuid, entry)?.rank ?: Rank.MEMBER
+            if (old == entry.rank) continue
+
+            val player = plugin.server.getPlayer(uuid) ?: continue
+            changed = true
+            applyPermissions(player)
+            player.sendMessage(
+                Component.text("Your rank is now ", NamedTextColor.GREEN)
+                    .append(Component.text(entry.rank.displayName, entry.rank.color, TextDecoration.BOLD))
+            )
+        }
+        if (changed) refreshTeams()
     }
 
-    fun rank(uuid: UUID): Rank = ranks[uuid] ?: Rank.MEMBER
+    fun rank(uuid: UUID): Rank = entries[uuid]?.rank ?: Rank.MEMBER
 
-    fun setRank(uuid: UUID, rank: Rank) {
-        if (rank == Rank.MEMBER) ranks.remove(uuid) else ranks[uuid] = rank
-        save()
+    // The UUID and correctly capitalized name of a player who has joined any server on the network.
+    fun findByName(name: String): Pair<UUID, String>? =
+        entries.entries.firstOrNull { it.value.name.equals(name, ignoreCase = true) }?.let { it.key to it.value.name }
+
+    // Takes effect here immediately; the returned future completes once it's saved.
+    fun setRank(uuid: UUID, name: String, rank: Rank): CompletableFuture<Void> {
+        entries[uuid] = RankEntry(name, rank)
+        pendingWrites.merge(uuid, 1, Int::plus)
         refreshTeams()
         plugin.server.getPlayer(uuid)?.let(::applyPermissions)
+
+        return CompletableFuture.runAsync({ store.setRank(uuid, name, rank) }, database)
+            .whenComplete { _, error ->
+                if (error != null) plugin.logger.log(Level.SEVERE, "Couldn't save $name's rank", error)
+                runOnMainThread { pendingWrites.computeIfPresent(uuid) { _, count -> (count - 1).takeIf { it > 0 } } }
+            }
+    }
+
+    // Scheduling fails once the plugin is disabling, and nothing needs updating by then.
+    private fun runOnMainThread(task: () -> Unit) {
+        if (plugin.isEnabled) plugin.server.scheduler.runTask(plugin, Runnable(task))
+    }
+
+    // Runs before the player is let in, off the main thread, so their rank is ready when they arrive.
+    @EventHandler
+    fun onPreLogin(event: AsyncPlayerPreLoginEvent) {
+        if (event.loginResult != AsyncPlayerPreLoginEvent.Result.ALLOWED) return
+        try {
+            entries[event.uniqueId] = store.recordJoin(event.uniqueId, event.name)
+        } catch (e: Exception) {
+            plugin.logger.log(Level.WARNING, "Couldn't load ${event.name}'s rank; using the last one seen", e)
+        }
     }
 
     fun applyAllPermissions() = plugin.server.onlinePlayers.forEach(::applyPermissions)
@@ -153,7 +220,7 @@ class RankManager(private val plugin: JavaPlugin) : Listener {
             color(NamedTextColor.nearestTo(rank.color))
         }
 
-    // Runs after ScoreboardManager has given the player their sidebar board.
+    // Runs after the Sidebar has given the player their sidebar board.
     @EventHandler(priority = EventPriority.MONITOR)
     fun onJoin(event: PlayerJoinEvent) {
         applyPermissions(event.player)

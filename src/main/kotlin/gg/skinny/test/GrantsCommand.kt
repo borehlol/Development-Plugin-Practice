@@ -44,12 +44,14 @@ class GrantsCommand(
             return true
         }
 
-        val target = economy.findByName(args[0])
+        // Players who haven't joined since ranks moved to the database are only known to the economy.
+        val target = ranks.findByName(args[0])
+            ?: economy.findByName(args[0])?.let { (uuid, account) -> uuid to account.name }
         if (target == null) {
-            sender.sendMessage(Component.text("${args[0]} has never joined this server.").color(NamedTextColor.RED))
+            sender.sendMessage(Component.text("${args[0]} has never joined the network.").color(NamedTextColor.RED))
             return true
         }
-        val (uuid, account) = target
+        val (uuid, name) = target
 
         if (args.size == 2) {
             val rank = parseRank(args[1])
@@ -59,7 +61,7 @@ class GrantsCommand(
                 )
                 return true
             }
-            grant(sender, uuid, account.name, rank)
+            grant(sender, uuid, name, rank)
             return true
         }
 
@@ -67,7 +69,7 @@ class GrantsCommand(
             sender.sendMessage(Component.text("Usage: /$label <player> <rank>").color(NamedTextColor.RED))
             return true
         }
-        sender.openInventory(createMenu(sender, uuid, account.name))
+        sender.openInventory(createMenu(sender, uuid, name))
         return true
     }
 
@@ -173,7 +175,15 @@ class GrantsCommand(
             sender.sendMessage(Component.text(reason).color(NamedTextColor.RED))
             return
         }
-        ranks.setRank(target, rank)
+        ranks.setRank(target, targetName, rank).exceptionally {
+            if (plugin.isEnabled) plugin.server.scheduler.runTask(plugin, Runnable {
+                sender.sendMessage(
+                    Component.text("Couldn't save $targetName's rank, so it will reset on restart. Check the server log.")
+                        .color(NamedTextColor.RED)
+                )
+            })
+            null
+        }
         sender.sendMessage(
             Component.text("Set $targetName's rank to ", NamedTextColor.GREEN)
                 .append(Component.text(rank.displayName, rank.color, TextDecoration.BOLD))

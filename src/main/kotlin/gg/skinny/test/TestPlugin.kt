@@ -7,11 +7,13 @@ import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerEggThrowEvent
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.plugin.java.JavaPlugin
+import java.io.File
 
 
 class TestPlugin : JavaPlugin(), Listener {
 
     private lateinit var economy: EconomyManager
+    private lateinit var ranks: RankManager
 
     override fun onEnable() {
         server.pluginManager.registerEvents(this, this)
@@ -42,13 +44,26 @@ class TestPlugin : JavaPlugin(), Listener {
         getCommand("economy")?.setExecutor(EconomyCommand(economy))
         getCommand("pay")?.setExecutor(PayCommand(economy))
 
-        val scoreboardManager = ScoreboardManager(this, economy)
-        server.pluginManager.registerEvents(scoreboardManager, this)
-        scoreboardManager.start()
-
-        val ranks = RankManager(this)
+        ranks = RankManager(this, createRankStore())
         ranks.load()
         server.pluginManager.registerEvents(ranks, this)
+        ranks.startSync()
+
+        val sidebar = when (NetworkServer.type) {
+            ServerType.LIFESTEAL -> LifestealSidebar(this, economy)
+            ServerType.LOBBY -> {
+                val playerCount = NetworkPlayerCount(this)
+                playerCount.start()
+                LobbySidebar(this, ranks, playerCount)
+            }
+            else -> null
+        }
+        sidebar?.let {
+            server.pluginManager.registerEvents(it, this)
+            it.start()
+        }
+
+        // After the sidebars exist, since each player's sidebar board needs the rank teams.
         ranks.refreshTeams()
         ranks.applyAllPermissions()
 
@@ -59,6 +74,30 @@ class TestPlugin : JavaPlugin(), Listener {
 
     override fun onDisable() {
         if (::economy.isInitialized) economy.save()
+        if (::ranks.isInitialized) ranks.close()
+    }
+
+    // MySQL when running on the network (set in network/docker-compose.yml), otherwise ranks.yml.
+    private fun createRankStore(): RankStore {
+        val file = File(dataFolder, "ranks.yml")
+        val host = System.getenv("SKINNY_DB_HOST") ?: return YamlRankStore(file)
+        val store = MySqlRankStore(
+            "jdbc:mysql://$host:3306/${System.getenv("SKINNY_DB_NAME")}",
+            System.getenv("SKINNY_DB_USER"),
+            System.getenv("SKINNY_DB_PASSWORD"),
+        )
+
+        // One-time import of the ranks this server saved before they were shared across the network.
+        if (file.exists()) {
+            val imported = YamlRankStore(file).loadAll()
+            for ((uuid, entry) in imported) {
+                val name = entry.name.ifEmpty { server.getOfflinePlayer(uuid).name ?: "unknown" }
+                store.setRank(uuid, name, entry.rank)
+            }
+            file.renameTo(File(dataFolder, "ranks.yml.imported"))
+            logger.info("Imported ${imported.size} ranks from ranks.yml into MySQL")
+        }
+        return store
     }
 
 
