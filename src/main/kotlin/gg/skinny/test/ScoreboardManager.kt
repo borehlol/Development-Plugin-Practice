@@ -23,6 +23,7 @@ class ScoreboardManager(private val plugin: JavaPlugin, private val economy: Eco
     private val boards = mutableMapOf<UUID, Scoreboard>()
 
     private val titleBlue = TextColor.color(0x3FA9F5)
+    private val gradientStart = TextColor.color(0x8FD3FF)
 
     fun start() {
         plugin.server.onlinePlayers.forEach(::create)
@@ -79,9 +80,20 @@ class ScoreboardManager(private val plugin: JavaPlugin, private val economy: Eco
             stat("☠ ", NamedTextColor.GOLD, "Deaths ", deaths.toString()),
             stat("⌚ ", NamedTextColor.YELLOW, "Playtime ", formatPlaytime(playtimeTicks)),
             Component.empty(),
-            Component.text("localhost ", NamedTextColor.GRAY)
-                .append(Component.text("(${player.ping}ms)", NamedTextColor.DARK_GRAY)),
+            Component.text("NA West ", NamedTextColor.GRAY)
+                .append(Component.text("[", NamedTextColor.GRAY))
+                .append(gradient("${player.ping}ms", gradientStart, titleBlue))
+                .append(Component.text("]", NamedTextColor.GRAY)),
         )
+    }
+
+    private fun gradient(text: String, from: TextColor, to: TextColor): Component {
+        val builder = Component.text()
+        text.forEachIndexed { i, c ->
+            val t = if (text.length > 1) i.toFloat() / (text.length - 1) else 0f
+            builder.append(Component.text(c, TextColor.lerp(t, from, to)))
+        }
+        return builder.build()
     }
 
     private fun stat(icon: String, iconColor: NamedTextColor, label: String, value: String): Component =
