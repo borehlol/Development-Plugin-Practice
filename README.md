@@ -1,4 +1,4 @@
-# SkinnyMC!
+# SkinnyMC
 
 A Paper 1.20.1 plugin (Kotlin) and the Docker network it runs on: a Velocity proxy in front of
 lobby, lifesteal, kitpvp, and minigame servers, with MySQL for network-wide data like ranks.
